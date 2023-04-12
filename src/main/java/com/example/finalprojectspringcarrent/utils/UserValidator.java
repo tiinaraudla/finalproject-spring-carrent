@@ -9,22 +9,17 @@ import com.example.finalprojectspringcarrent.models.UserType;
  * @Date
  */
 public class UserValidator {
-    public boolean isAdminUser(User user) throws UserValidationException {
-        String fullName = user.getFirstName() + " " + user.getLastName();
+    public boolean isOwnerUser(User user) throws UserValidationException {
+        String fullName = user.getFirsName() + " " + user.getLastName();
 
         if(user.getUserType() == null) {
             throw new NullPointerException(String.format("The user type is null for user: %s", fullName));
         }
-
-        if(UserType.OWNER.equals(user.getUserType())) {
+        if (UserType.OWNER.equals(user.getUserType())){
             return true;
         } else {
-            throw new UserValidationException(fullName, "User admin check failed!");
+            throw new UserValidationException(fullName, "User owner check failed!");
         }
-    }
-    public String encodePassword(String password) {
-        int midIndex = password.length() / 2;
-
-        return password.substring(0, midIndex) +"#sda_java#" + password.substring(midIndex);
-    }
 }
+}
+

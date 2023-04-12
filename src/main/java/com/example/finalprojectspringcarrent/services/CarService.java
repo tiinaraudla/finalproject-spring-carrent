@@ -1,9 +1,7 @@
 package com.example.finalprojectspringcarrent.services;
 
 import com.example.finalprojectspringcarrent.exceptions.CarNotFoundException;
-import com.example.finalprojectspringcarrent.models.Branch;
 import com.example.finalprojectspringcarrent.models.Car;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -13,11 +11,19 @@ import java.util.List;
  */
 public interface CarService {
     /**
-     * To add a new car
+     * To create a new car
      *
      * @param car Car
      */
     void addCar(Car car);
+
+    /**
+     * To find a car by modelName
+     *
+     * @param modelName car modelName
+     * @return Car
+     */
+    Car findCarByModelName(String modelName) throws CarNotFoundException;
 
     /**
      * To find a car by ID
@@ -27,12 +33,16 @@ public interface CarService {
      */
     Car findCarById(Long id) throws CarNotFoundException;
 
+
+
+
     /**
-     * To find a car by modelName
+     * To update on existing Car
      *
-     * @return Car
+     * @param  car Car
      */
-    Car findCarByModelName(String name) throws CarNotFoundException;
+
+    void updateCar(Car car) throws CarNotFoundException;
 
     /**
      * To find all cars
@@ -40,21 +50,6 @@ public interface CarService {
      * @return a list of Cars
      */
     List<Car> findAllCars();
-
-    /**
-     * To find all cars by branches
-     *
-     * @param branch Branch
-     * @return a list of Cars
-     */
-    List<Car> findAllCarsByBranches(Branch branch);
-
-    /**
-     * To update an existing Cars
-     *
-     * @param car Car
-     */
-    void updateCar(Car car) throws CarNotFoundException;
 
     /**
      * To delete a Car by ID

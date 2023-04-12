@@ -23,11 +23,14 @@ public class AuthorityServiceImpl implements AuthorityService {
         return authorityRepository.findAll();
     }
 
+    @Override
     public Authority findAuthorityByName(String name) throws AuthorityNotFoundException {
         Optional<Authority> optionalAuthority = authorityRepository.findByName(name);
+
         if(optionalAuthority.isEmpty()) {
             throw new AuthorityNotFoundException(name);
         }
+
         return optionalAuthority.get();
     }
 

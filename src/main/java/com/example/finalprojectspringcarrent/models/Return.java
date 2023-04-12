@@ -1,9 +1,8 @@
 package com.example.finalprojectspringcarrent.models;
-
-import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 

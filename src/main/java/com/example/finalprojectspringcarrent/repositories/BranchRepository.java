@@ -5,4 +5,5 @@ package com.example.finalprojectspringcarrent.repositories;
  * @Date
  */
 public interface BranchRepository {
+
 }

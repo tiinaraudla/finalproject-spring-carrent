@@ -3,8 +3,6 @@ package com.example.finalprojectspringcarrent.services;
 import com.example.finalprojectspringcarrent.exceptions.BookingNotFoundException;
 import com.example.finalprojectspringcarrent.models.Booking;
 import com.example.finalprojectspringcarrent.models.Branch;
-import com.example.finalprojectspringcarrent.models.Car;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

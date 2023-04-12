@@ -13,4 +13,5 @@ public class BookingNotFoundException extends Exception{
     public BookingNotFoundException (String clientName) {
         super(String.format("Booking not found for clientName: %s", clientName));
     }
+
 }

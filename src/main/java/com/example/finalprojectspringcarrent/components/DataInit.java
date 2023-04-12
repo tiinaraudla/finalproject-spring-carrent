@@ -4,17 +4,18 @@ import com.example.finalprojectspringcarrent.exceptions.AuthorityNotFoundExcepti
 import com.example.finalprojectspringcarrent.exceptions.BranchNotFoundException;
 import com.example.finalprojectspringcarrent.exceptions.CarNotFoundException;
 import com.example.finalprojectspringcarrent.exceptions.UserNotFoundException;
-import com.example.finalprojectspringcarrent.models.Authority;
-import com.example.finalprojectspringcarrent.models.Branch;
-import com.example.finalprojectspringcarrent.models.Car;
-import com.example.finalprojectspringcarrent.models.User;
+import com.example.finalprojectspringcarrent.models.*;
 import com.example.finalprojectspringcarrent.services.AuthorityService;
 import com.example.finalprojectspringcarrent.services.BranchService;
 import com.example.finalprojectspringcarrent.services.CarService;
 import com.example.finalprojectspringcarrent.services.UserService;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+
+import static com.example.finalprojectspringcarrent.utils.Constants.Security.*;
 
 /**
  * @author Tiina Raudla
@@ -28,18 +29,20 @@ public class DataInit {
     @Autowired
     private CarService carService;
     @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
     private UserService userService;
     @Autowired
     private AuthorityService authorityService;
 
 
     @PostConstruct
-    public void init() {
+    public void init() throws BranchNotFoundException {
         initBranch();
         initCar();
-        initUser();
         initBooking();
         initAuthority();
+        initUser();
     }
     private  void initBranch(){
         System.out.println("Starting Branch initialization...");
@@ -52,9 +55,10 @@ public class DataInit {
         } catch (BranchNotFoundException e) {
             branchService.createBranch(branch);
         }
+
     }
 
-    private void initCar() {
+    private void initCar() throws  BranchNotFoundException {
         System.out.println("Starting cars initialization...");
 
         Car car = new Car();
@@ -73,35 +77,41 @@ public class DataInit {
             carService.addCar(car);
         }
     }
-    private  void initUser(){
+    private  void initBooking(){
+
+    }
+    private void initUser() {
         System.out.println("Starting initializing User..");
+
         try {
             Authority authority = authorityService.findAuthorityByName(AUTHORITY_OWNER);
+
             User user = new User();
-            user.setUsername("admin@study.com");
+            user.setUsername("owner@rental.com");
+            user.setFirsName("Sergei");
+            user.setLastName("Oksanen");
+            user.setAddress("Tallinn");
+            user.setUserType(UserType.OWNER);
+            user.setActive(true);
             user.setPassword("123456");
             user.setAuthority(authority);
+
             try {
-                User resultUser = UserService.findUserByUsername(user.getUsername());
+                User resultUser = userService.findUserByUsername(user.getUsername());
                 System.out.println("Cannot pre-initialize user: " + user.getUsername());
             } catch(UserNotFoundException e) {
-                UserService.createUser(user);
+                userService.createUser(user);
             }
         } catch (AuthorityNotFoundException e) {
             System.out.println("Cannot pre-initialize User! Reason:  " + e.getLocalizedMessage());
         }
 
     }
-
-    private  void initBooking(){
-
-
-    }
     private void initAuthority() {
         System.out.println("Starting initializing Authority..");
-        Authority authorityAdmin = new Authority();
-        authorityAdmin.setName(AUTHORITY_OWNER);
-        createAuthority(authorityAdmin);
+        Authority authorityOwner = new Authority();
+        authorityOwner.setName(AUTHORITY_OWNER);
+        createAuthority(authorityOwner);
 
         Authority authorityEmployee = new Authority();
         authorityEmployee.setName(AUTHORITY_EMPLOYEE);

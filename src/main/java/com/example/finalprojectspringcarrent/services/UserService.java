@@ -12,53 +12,24 @@ import java.util.List;
  */
 public interface UserService {
     /**
-     * To create a new user
+     * To find all users
+     *
+     * @return a list of User
+     */
+    List<User> findAllUsers();
+
+    /**
+     * To find user by Username
+     *
+     * @param username username
+     * @return User
+     */
+    User findUserByUsername(String username) throws UserNotFoundException;
+
+    /**
+     * To create a new User
      *
      * @param user User
      */
     void createUser(User user);
-
-    /**
-     * To find a user by ID
-     *
-     * @param name User ID
-     * @return User
-     */
-    User findUserByName(Long name) throws UserNotFoundException;
-
-    /**
-     * To find a user by name
-     *
-     * @param lastName Customer lastName
-     * @return Customer
-     */
-    User findUserByLastName(String lastName) throws UserNotFoundException;
-
-    /**
-     * To find all customers
-     *
-     * @return a list of customer
-     */
-    List<User> findAllUser();
-
-    /**
-     * To update an existing User
-     *
-     * @param user User
-     */
-    void updateUser(User user) throws UserNotFoundException;
-
-    /**
-     * To delete a User by ID
-     *
-     * @param id User ID
-     */
-    void deleteUserById(Long id) throws UserNotFoundException;
-
-    /**
-     * To restore a User by ID
-     *
-     * @param id User ID
-     */
-    void restoreUserById(Long id) throws UserNotFoundException;
 }
